@@ -5,18 +5,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
 
-namespace ADO
+namespace DBtools
 {
-    internal class Connector
+    public class Connector
     {
         string connection_string;
         SqlConnection connection;
 
-        public Connector (string connection_string)
+        public Connector(string connection_string)
         {
             Console.WriteLine(connection_string);
             this.connection_string = connection_string;
-            connection = new SqlConnection (connection_string);
+            connection = new SqlConnection(connection_string);
         }
         public void Select(string cmd)
         {
@@ -36,7 +36,7 @@ namespace ADO
             }
             reader.Close();
             connection.Close();
-         }
+        }
         public void Select(string fields, string tables, string condition = "")
         {
             string cmd = $"SELECT {fields} FROM {tables}";
@@ -45,7 +45,7 @@ namespace ADO
             Select(cmd);
         }
         public object Scalar(string cmd)
-        { 
+        {
             object result = null;
             connection.Open();
 
@@ -104,7 +104,7 @@ AND CONSTRAINT_NAME LIKE N'PK_%'";
             string[] s_fields = fields.Split(',');
             string[] s_values = values.Split(',');
             string parsed_values = $"N'{s_values[0]}',";
-            for(int i = 1; i < s_fields.Length; i++)
+            for (int i = 1; i < s_fields.Length; i++)
             {
                 condition += $" {s_fields[i]} = N'{s_values[i]}'";
                 parsed_values += s_values[i][0] != 'N' && s_values[i][1] != '\'' ? $"N'{s_values[i]}'" : s_values[i];
