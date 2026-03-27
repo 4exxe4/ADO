@@ -37,6 +37,8 @@
             this.tabPageTeachers = new System.Windows.Forms.TabPage();
             this.dgvTeachers = new System.Windows.Forms.DataGridView();
             this.dgvDirections = new System.Windows.Forms.DataGridView();
+            this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.statusStrip.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.tabPageDirections.SuspendLayout();
             this.tabPageTeachers.SuspendLayout();
@@ -46,6 +48,8 @@
             // 
             // statusStrip
             // 
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel});
             this.statusStrip.Location = new System.Drawing.Point(0, 428);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Size = new System.Drawing.Size(800, 22);
@@ -138,6 +142,12 @@
             this.dgvDirections.Size = new System.Drawing.Size(779, 367);
             this.dgvDirections.TabIndex = 0;
             // 
+            // toolStripStatusLabel
+            // 
+            this.toolStripStatusLabel.Name = "toolStripStatusLabel";
+            this.toolStripStatusLabel.Size = new System.Drawing.Size(118, 17);
+            this.toolStripStatusLabel.Text = "toolStripStatusLabel1";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -147,6 +157,8 @@
             this.Controls.Add(this.statusStrip);
             this.Name = "MainForm";
             this.Text = "Academy PV_521";
+            this.statusStrip.ResumeLayout(false);
+            this.statusStrip.PerformLayout();
             this.tabControl.ResumeLayout(false);
             this.tabPageDirections.ResumeLayout(false);
             this.tabPageTeachers.ResumeLayout(false);
@@ -168,6 +180,7 @@
         private System.Windows.Forms.TabPage tabPageTeachers;
         private System.Windows.Forms.DataGridView dgvTeachers;
         private System.Windows.Forms.DataGridView dgvDirections;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
     }
 }
 
