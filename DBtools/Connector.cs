@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Data;
-using System.Data.SqlClient;
+using System.Drawing;
 
 namespace DBtools
 {
@@ -101,9 +103,9 @@ namespace DBtools
         {
             string raw = @"RAW string"; //RAW - строка игнорирует переносы
             string cmd = $@"SELECT	INFORMATION_SCHEMA.KEY_COLUMN_USAGE.COLUMN_NAME
-FROM	INFORMATION_SCHEMA.KEY_COLUMN_USAGE
-WHERE	TABLE_NAME=N'{table}'
-AND CONSTRAINT_NAME LIKE N'PK_%'";
+                         FROM	INFORMATION_SCHEMA.KEY_COLUMN_USAGE
+                         WHERE	TABLE_NAME=N'{table}'
+                         AND CONSTRAINT_NAME LIKE N'PK_%'";
             return (string)Scalar(cmd);
         }
         public void Insert(string cmd)
@@ -164,6 +166,25 @@ AND CONSTRAINT_NAME LIKE N'PK_%'";
             connection.Open();
             command.ExecuteNonQuery();
             connection.Close();
+        }
+        public Image DownloadPhoto(string table, string field, int id)
+        {
+            Image photo = null;
+            string cmd = $"SELECT {field} FROM {table} WHERE {GetPrimaryKeyColumnName(table)}={id}";
+            SqlCommand command = new SqlCommand(cmd, connection);
+            connection.Open();
+            SqlDataReader reader = command.ExecuteReader();
+            if (reader.Read())
+            {
+                byte[] data = reader[0] as byte[];
+                if (data != null)
+                {
+                    MemoryStream ms = new MemoryStream(data);
+                    photo = Image.FromStream(ms);
+                }
+            }
+            connection.Close();
+            return photo;
         }
     }
 }
