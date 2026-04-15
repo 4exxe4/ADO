@@ -47,7 +47,7 @@ namespace Academy
             //object id = (int)DataBase.Connector.Scalar($"SELECT stud_id FROM Students WHERE {student.GetCondition()}");
             if (student.id == 0) student.id = Convert.ToInt32(DataBase.Connector.Scalar
                 (
-                $"INSERT Students({student.GetNames()} VALUES ({student.GetValues()});SELECT SCOPE_IDENTITY()")
+                $"INSERT Students({student.GetNames()}) VALUES ({student.GetValues()});SELECT SCOPE_IDENTITY()")
                 );
             //if (student.id == null) DataBase.Connector.Insert("Students", $"{student.GetNames()}", $"{student.GetValues()}");
             else DataBase.Connector.Update($"UPDATE Students SET {student.GetUpdateString()} WHERE stud_id={student.id}");
