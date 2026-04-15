@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 
 namespace Academy
 {
@@ -17,6 +18,16 @@ namespace Academy
         public TeacherForm()
         {
             InitializeComponent();
+        }
+        public TeacherForm(int id) : this()
+        {
+            DataTable table = DataBase.Connector.Select($"SELECT * FROM Teachers WHERE teacher_id = {id}");
+            teacher = new Models.Teacher(table.Rows[0].ItemArray);
+            human = teacher;
+            Extract();
+            this.dtpWorkSince.Value = Convert.ToDateTime(teacher.work_since);
+            this.tbRate.Text = teacher.rate.ToString();
+            pbPhoto.Image = DataBase.Connector.DownloadPhoto("Teachers","photo",id);
         }
         protected override void buttonOK_Click(object sender, EventArgs e)
         {
